@@ -1,0 +1,5 @@
+proxmox_nodes:
+  - hive
+  - titan
+
+template_prefix: "template"
