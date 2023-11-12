@@ -1,0 +1,12 @@
+---
+- name: Fetch all VM's on each Proxmox node
+  command: ssh {{ item }} 'qm list -full'
+  register: qm_list
+  loop: "{{ proxmox_nodes }}"
+  ignore_errors: true
+
+- name: Check for existing templates
+  assert:
+    that: "'{{ template_prefix }}' not in item.stdout"
+  loop: "{{ qm_list.results }}"
+  when: item.rc == 0
